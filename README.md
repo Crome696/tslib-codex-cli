@@ -166,13 +166,10 @@ npm run pack:check
 git diff --check
 ```
 
-An optional local E2E test can be enabled consciously after installing and authenticating Codex. It requests read-only behavior and is not part of CI:
+The local E2E suite runs against the real `codex` executable and is intentionally separate from the offline checks. Before running it, install and authenticate the Codex CLI locally and ensure that network access is available. The suite uses read-only prompts, performs real model requests, and is not part of CI:
 
 ```sh
-# PowerShell
-$env:CODEX_E2E = '1'
 npm run test:e2e
-
-# POSIX shell
-CODEX_E2E=1 npm run test:e2e
 ```
+
+If the Codex CLI is missing or not authenticated, `npm run test:e2e` fails with an actionable diagnostic instead of silently skipping the suite. The normal `npm test` command remains offline and does not invoke Codex.
